@@ -29,13 +29,14 @@
                     </option>
                     @endforeach
                     </select>
-                    </div>   
-                </div>    
+                    </div>
+                </div>  
+              
             <div class="card-footer">
                 <button type="submit" class="btn w-100 btn-success">検索</button>
             </div>
         </form>
-
+    
 
     <table class="table table-bordered">
         <tr>
@@ -56,6 +57,8 @@
             <td style="text-align:right">{{ $product->manufacture_name }}</td>
             <td style="text-align:right">{{ $product->comment }}</td>
             <td style="text-align:right">{{ $product->img_path }}</td>
+            asset: {{ asset('img/天然水.png')}}<br>
+            <img src="{{ asset('img/天然水.png') }}" alt="">
             <td style="text-align:center">
             <form action="{{route('products.destroy',$product->id)}}"method="POST">
             @csrf

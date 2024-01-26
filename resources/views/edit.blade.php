@@ -28,17 +28,17 @@
         </div>
         <div class="col-12 mb-2 mt-2">
             <div class="form-group">
-                <input type="text" name="kakaku" class="form-control" placeholder="価格">
+                <input type="text" name="price" value="{{ $products->price }}"  class="form-control" placeholder="価格">
             </div>
         </div>
         <div class="col-12 mb-2 mt-2">
             <div class="form-group">
-            <input type="text" name="kakaku" class="form-control" placeholder="在庫数">
+            <input type="text" name="stock" value="{{ $products->stock }}" class="form-control" placeholder="在庫数">
             </div>
         </div>
         <div class="col-12 mb-2 mt-2">
             <div class="form-group">
-            <textarea class="form-control" style="height:100px" name="shosai" placeholder="コメント"></textarea>
+            <textarea class="form-control" name="comment" value="{{ $products->comment }}" style="height:100px" name="shosai" placeholder="コメント"></textarea>
             </div>
         </div>
          <form action="#" method="post" enctype="multipart/form-data">
@@ -56,8 +56,8 @@
         <a href="{{ route('products.index') }}" class="btn btn-outline-secondary" role="button">
             <i class="fa fa-reply mr-1" aria-hidden="true"></i>{{ __('一覧画面へ') }}
         </a>
-        <button type="submit" class="btn btn-success">
-            {{ __('更新') }}
+        <button type="submit">
+        <td><a href="{{ route('products.edit', ['id'=> $products->id]) }}" class="btn btn-info">更新</a></td>
         </button>
       </div>
     </fieldset>

@@ -12,36 +12,50 @@
         </div>
         <div class="col-12 mb-2 mt-2">
             <div class="form-group">
+            <label class="col-sm-2 col-form-label">商品情報ID</label>
                 {{ $products->id }}                
             </div>
         </div>
         <div class="col-12 mb-2 mt-2">
             <div class="form-group">
-                {{ $products->img_path }}                
+            <label class="col-sm-2 col-form-label">商品画像</label>    
+                {{ $products->img_path }}  
+                asset: {{ asset('img/天然水.png')}}<br>
+            <img src="{{ asset('img/天然水.png') }}" alt="">                  
             </div>
         </div>
         <div class="col-12 mb-2 mt-2">
             <div class="form-group">
+            <label class="col-sm-2 col-form-label">商品名</label>        
                 {{ $products->product_name }}                
             </div>
         </div>
         <div class="col-12 mb-2 mt-2">
             <div class="form-group">
+            <label class="col-sm-2 col-form-label">メーカー名</label>    
                 {{ $products->manufacture_name }}                
             </div>
         </div>
         <div class="col-12 mb-2 mt-2">
             <div class="form-group">
+            <label class="col-sm-2 col-form-label">価格</label>        
                 {{ $products->price }}     
         </div>    
         </div>
         <div class="col-12 mb-2 mt-2">
             <div class="form-group">
+            <label class="col-sm-2 col-form-label">在庫数</label>        
                 {{ $products->stock }}                
             </div>
         </div>
         <div class="col-12 mb-2 mt-2">
-                <button type="submit" class="btn btn-primary w-100">編集</button>
+            <div class="form-group">
+            <label class="col-sm-2 col-form-label">コメント</label>     
+            <textarea class="form-control" style="height:100px" name="shosai" placeholder="コメント"></textarea>
+            </div>
+        </div>
+        <div class="col-12 mb-2 mt-2">
+        <td><a href="{{ route('products.edit', ['id'=>$products->id])}}" class="btn btn-primary">編集</a></td>
         </div>
     </div>
 </div>

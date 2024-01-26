@@ -24,10 +24,11 @@ class ProductController extends Controller
         if($company_id) {
             $query->where('company_id',$company_id);
         }    
+    
 
         $products = $query->get();
         $companies = company::all();
-        
+
         return view('index', ['products' => $products, 'companies' => $companies], compact('products', 'keyword') );  
     }
     
@@ -75,6 +76,23 @@ class ProductController extends Controller
     {   
         $products = Product::find($id);
         $updateProducts = $this->products->updateProducts($request, $products);
+
+        $validator = Valiator::make($request->all(),[
+            'price' => 'required',
+            'stock' => 'required',
+            'comment' => 'required',
+        ]);
+        if($validator->falis()){
+            return redirect('products/'.$id.'/edit')
+            ->withInput()
+            ->withErrors($validator);
+        }    
+        $products = Product::find($id);
+        $products->price = $request->price;
+        $products->stock = $request->stock;
+        $products->comment = $request->comment;
+        $products->save();
+        
 
         return redirect()->route('products.index');
     }
