@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +19,7 @@ Route::get('/',function(){
     return view('welcome');
 });
 
+Auth::routes(); //
 Route::get('/products', 'App\Http\Controllers\ProductController@index')->name('products.index');
 Route::get('/products/create','App\Http\Controllers\ProductController@create')->name('products.create');
 Route::get('/products/show/{id}','App\Http\Controllers\ProductController@show')->name('products.show');
@@ -27,3 +29,7 @@ Route::get('/products/edit/{id}','App\Http\Controllers\ProductController@edit')-
 Route::post('/products/update/{id}',[ProductController::class,'update'])->name('products.update');
 Route::get('/products/regist','ProductController@showRegistForm')->name('regist');
 Route::post('/products/regist','ProductController@registSubmit')->name('submit');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

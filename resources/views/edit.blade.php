@@ -13,6 +13,11 @@
             <div class="form-group">
                 {{ $products->id }}                
             </div>
+            </div>
+        <div class="col-12 mb-2 mt-2">
+            <div class="form-group">
+                <input type="text" name="product_name" value="{{ $products->product_name }}"  class="form-control" placeholder="商品名">
+            </div>        
         </div>  
         <div class="left">
             <div class="form-group">    

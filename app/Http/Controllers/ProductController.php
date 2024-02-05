@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
+    public function redirectPath ()
+    {
+        return 'products/index';
+    }
+
     public function index(Request $request)
 
     {   
@@ -92,7 +97,7 @@ class ProductController extends Controller
         $products->stock = $request->stock;
         $products->comment = $request->comment;
         $products->save();
-        
+
 
         return redirect()->route('products.index');
     }
