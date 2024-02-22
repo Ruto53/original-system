@@ -57,7 +57,9 @@
          </div>
          </div> 
         <div class="col-12 mb-2 mt-2">
+            <form action="{{ route('products.store') }}" method="post" enctype="multipart/form-data">
                 <button type="submit" class="btn btn-primary w-100">登録</button>
+            </form>    
         </div>
     </div>      
 </form>

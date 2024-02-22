@@ -49,6 +49,11 @@ class ProductController extends Controller
     {   
         $registerProducts = $this->products->InsertProducts($request);
         return view('products.create');
+        
+        $input = $request->all();
+        Priduct::create($input);
+        return redirect()->route('products.store')
+        ->with('success','商品を登録しました');
     }
 
 
