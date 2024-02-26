@@ -49,7 +49,7 @@ class ProductController extends Controller
     {   
 
         $model = new Product();
-        $registerProducts = $model->InsertProducts($request);
+        $registerProduct = $model->InsertProducts($request);
         return view('products.create');
         
         $input = $request->all();
