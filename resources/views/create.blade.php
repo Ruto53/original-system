@@ -59,7 +59,7 @@
         <div class="col-12 mb-2 mt-2">
             <form action="{{ route('products.store') }}" method="post" enctype="multipart/form-data">
             {{ csrf_field() }}
-            <input id="product_name" type="text" name="product_name" class="form-control" required>
+            <input id="product_name" type="text" name="product_name" class="form-control">
                 <button type="submit" class="btn btn-primary w-100">登録</button>
             </form>    
         </div>

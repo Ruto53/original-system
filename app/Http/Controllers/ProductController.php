@@ -47,7 +47,9 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {   
-        $registerProducts = $this->products->InsertProducts($request);
+
+        $model = new Product();
+        $registerProducts = $model->InsertProducts($request);
         return view('products.create');
         
         $input = $request->all();
