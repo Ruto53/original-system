@@ -45,15 +45,33 @@ class ProductController extends Controller
        
     }
 
-    public function store(Request $request)
+    public function store(ArticleRequest $request)
     {   
-
+       
         $model = new Product();
-        $registerProduct = $model->InsertProducts($request);
-        return view('products.create');
+        $image = $request->file('img_path');
+
+        if($image){
+            $file_name = $image->getClientOriginalName();
+            $image->storeAs('public/img',$file_name);
+            $img_path ='storage/img/'.$file_name;
+           
+      }else{
+        $img_path =null; 
+      }
+        
+        $registerProduct = $model->InsertProducts($request,$img_path);
+       
+        $request->validate([
+            'product_name'=>'required|max:20',
+            'company-id'=>'required|integer',
+            'price'=>'required|integer',
+            'stock'=>'required|integer',
+            'comment'=>'required|max:140',
+        ]);
+        return redirect()->route('products.create')->with('message','登録が完了しました');
     
     }
-
 
     public function show($id)
     {
@@ -72,18 +90,53 @@ class ProductController extends Controller
         return redirect()->route('products.index');
     }
     
-    public function edit($id)
+    public function edit(Request $request, $id)
     {   
         $companies = company::all();
         $products = Product::find($id);
+        $image = $request->file('img_path');
+        $model = new Product();
 
-        return view('edit', ['products' => $products, 'companies' => $companies] );        
+        $array = [
+            'product_name' => $request->input('product_name'),
+            'company_id' => $request->input('company_id'),
+            'price' => $request->input('price'),
+            'stock' => $request->input('stock'),
+            'comment' => $request->input('comment'),
+            // 'img_path' => $image_path
+        ];
+
+        if($image){
+            $file_name = $image->getClientOriginalName();
+            $image->storeAs('public/img',$file_name);
+            $img_path = 'storage/img'.$file_name;
+
+            $array['img_path'] = $image_path;
+
+            $model->newImage($array,$id);
+
+        }else{
+            $model->newImage($array,$id);
+        }
+        
+        $request->validate([
+            'product_name'=>'required|max:20',
+            'company-id'=>'required|integer',
+            'price'=>'required|integer',
+            'stock'=>'required|integer',
+            'comment'=>'required|max:140',
+        ]);
+        
+        $model->newImage ($array,$id);
+        return view('edit', ['products' => $products, 'companies' => $companies] )->with('message','更新が完了しました');       
     }
 
     public function update(Request $request, $id)
     {   
         $products = Product::find($id);
         $updateProducts = $this->products->updateProducts($request, $products);
+
+        return redirect()->route('products.index');
 
         $validator = Valiator::make($request->all(),[
             'price' => 'required',
@@ -128,6 +181,17 @@ class ProductController extends Controller
         }
           return redirect(route('regist')); 
         }
+    
+    public function showList() {
+        return view('list');
+    }
+    
+
+
+
+
+
+
     }
 
 
