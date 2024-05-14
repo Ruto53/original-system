@@ -22,7 +22,7 @@
             @if(session('message'))
             {{ session('message') }}
             @endif    
-                <input type="text" name="name" class="form-control" placeholder="商品名">
+                <input type="text" name="product_name" class="form-control" placeholder="商品名">
                 @error('product_name')
                 <span style="color:red;">商品名を20文字以内で入力してください</span>
                 @enderror
@@ -48,7 +48,7 @@
        </div>   
         <div class="col-12 mb-2 mt-2">
             <div class="form-group">
-                <input type="text" name="kakaku" class="form-control" placeholder="価格">
+                <input type="text" name="price" class="form-control" placeholder="価格">
                 @error('price')
                 <span style="color:red;">価格を数字で入力してください</span>
                 @enderror
@@ -64,7 +64,7 @@
         </div>
         <div class="col-12 mb-2 mt-2">
             <div class="form-group">
-            <textarea class="form-control" style="height:100px" name="shosai" placeholder="コメント"></textarea>
+            <textarea class="form-control" style="height:100px" name="comment" placeholder="コメント"></textarea>
             @error('shosai')
                <span style="color:red;">コメントを140文字以内で入力してください</span>
                @enderror

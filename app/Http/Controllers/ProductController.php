@@ -21,18 +21,11 @@ class ProductController extends Controller
         $keyword = $request->input('keyword');
         $query = Product::query();
 
-        if(!empty($keyword)) {
-            $query->where('product_name', 'LIKE', "%{$keyword}%");
-        } 
-        $company_id = $request->input('company-id');
-
-        if($company_id) {
-            $query->where('company_id',$company_id);
-        }    
-    
-
         $products = $query->get();
         $companies = company::all();
+
+        $model = new Product();
+        $query = getList('keyword','company_id');
 
         return view('index', ['products' => $products, 'companies' => $companies], compact('products', 'keyword') );  
     }
@@ -119,14 +112,7 @@ class ProductController extends Controller
             $model->newImage($array,$id);
         }
         
-        $request->validate([
-            'product_name'=>'required|max:20',
-            'company-id'=>'required|integer',
-            'price'=>'required|integer',
-            'stock'=>'required|integer',
-            'comment'=>'required|max:140',
-        ]);
-        
+
         $model->newImage ($array,$id);
         return view('edit', ['products' => $products, 'companies' => $companies] )->with('message','更新が完了しました');       
     }

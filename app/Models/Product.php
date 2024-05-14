@@ -7,10 +7,31 @@ use Illuminate\Support\Facades\DB;
 
 class Product extends Model
 {
-    public function getList() {
+    protected $fillable=[
+        'name',
+        'company-id',
+        'price',
+        'stock',
+        'comment',
+        'created_at',
+        'updated_at',                                               
+                                                       
+     ];          
+    public function getList($keyword,$company_id) {
         $products = DB::table('products')->join('companies','company_id','=','companies.id')
                                          ->select('products.*','companies.company_name')
                                          ->get();return $products;
+
+    if(!empty($keyword)) {
+         $query->where('product_name', 'LIKE', "%{$keyword}%");
+         } 
+         $company_id = $request->input('company-id');
+                                
+    if($company_id) {
+        $query->where('company_id',$company_id);
+         }    
+                                
+
     } 
     public function getCompaniesList($id) {
         $products = DB::table("products")       ->join('companies', 'company_id', '=', 'companies.id')
@@ -42,16 +63,7 @@ class Product extends Model
                                                            'comment'     => $data->input('shosai'),
                                                            'img_path'    => $img_path,
                                                          ]);               
-        protected $fillable=[
-        'name',
-        'company-id',
-        'kakaku',
-        'stock',
-        'shosai',
-        'created_at',
-        'updated_at',                                               
-                                                       
-                            ];                                                
+                                             
     }
 
     public function newImage($array,$id) {
@@ -73,15 +85,7 @@ class Product extends Model
                                                            'comment'    => $request->input('shosai'),
                                                            'img_path'    => $img_path,
                                                         ]);
-        protected $fillable=[
-            'name',
-            'company-id',
-            'kakaku',
-            'stock',
-            'shosai',
-            'created_at',
-            'updated_at',
-                            ];
+       
     }
     
    

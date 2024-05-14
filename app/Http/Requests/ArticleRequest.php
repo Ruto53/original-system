@@ -25,6 +25,7 @@ class ArticleRequest extends FormRequest
     {
         return [
             'product_name' => 'required | max:255',
+            'company_id' => 'required | max:255',
             'price' => 'required | max:255',
             'stock' => 'required | max:255',
             'comment' => 'max:10000',
@@ -44,6 +45,7 @@ class ArticleRequest extends FormRequest
     public function messages() {
         return [
             'product_name.required' => ':attributeは必須項目です。',
+            'company_id.required' => ':attributeは必須項目です。',
             'price.required' => ':attributeは必須項目です。',
             'price.max' => ':attributeは:max字以内で入力してください',
             'stock.required' => ':attributeは必須項目です。',
