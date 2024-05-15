@@ -44,7 +44,7 @@
             <th>product_name</th>
             <th>price</th>
             <th>stock</th>
-            <th>manufacture_name</th>
+            <th>company_name</th>
             <th>comment</th>
             <th>img_path</th>
         </tr>
@@ -54,7 +54,7 @@
             <td>{{ $product->product_name }}</td>
             <td style="text-align:right">{{ $product->price }}円</td>
             <td style="text-align:right">{{ $product->stock }}本</td>
-            <td style="text-align:right">{{ $product->manufacture_name }}</td>
+            <td style="text-align:right">{{ $product->company_name }}</td>
             <td style="text-align:right">{{ $product->comment }}</td>
             <td><img src="{{ asset($product->img_path) }}"width:100px></td>
             <td style="text-align:center">

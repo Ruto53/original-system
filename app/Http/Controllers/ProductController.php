@@ -19,13 +19,11 @@ class ProductController extends Controller
 
     {   
         $keyword = $request->input('keyword');
-        $query = Product::query();
-
-        $products = $query->get();
+        $company_id = $request->input('company_id');
         $companies = company::all();
 
         $model = new Product();
-        $query = getList('keyword','company_id');
+        $products = $model->getList($keyword,$company_id);
 
         return view('index', ['products' => $products, 'companies' => $companies], compact('products', 'keyword') );  
     }

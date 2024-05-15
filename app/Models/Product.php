@@ -18,19 +18,20 @@ class Product extends Model
                                                        
      ];          
     public function getList($keyword,$company_id) {
-        $products = DB::table('products')->join('companies','company_id','=','companies.id')
-                                         ->select('products.*','companies.company_name')
-                                         ->get();return $products;
+        $query = DB::table('products')->join('companies','company_id','=','companies.id')
+                                         ->select('products.*','companies.company_name');
+                                         
 
     if(!empty($keyword)) {
          $query->where('product_name', 'LIKE', "%{$keyword}%");
          } 
-         $company_id = $request->input('company-id');
                                 
     if($company_id) {
         $query->where('company_id',$company_id);
-         }    
-                                
+         } 
+
+        $products = $query->get();
+        return $products;                            
 
     } 
     public function getCompaniesList($id) {
@@ -57,10 +58,10 @@ class Product extends Model
         $products = DB::table('products')
                                                ->insert([  
                                                            'company_id' => $data->input('company-id'),
-                                                           'product_name' => $data->input('name'),
-                                                           'price'       => $data->input('kakaku'),
+                                                           'product_name' => $data->input('product_name'),
+                                                           'price'       => $data->input('price'),
                                                            'stock'       => $data->input('stock'),
-                                                           'comment'     => $data->input('shosai'),
+                                                           'comment'     => $data->input('comment'),
                                                            'img_path'    => $img_path,
                                                          ]);               
                                              
