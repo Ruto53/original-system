@@ -41,7 +41,7 @@ class ProductController extends Controller
        
         $model = new Product();
         $image = $request->file('img_path');
-
+       
         if($image){
             $file_name = $image->getClientOriginalName();
             $image->storeAs('public/img',$file_name);
@@ -60,8 +60,8 @@ class ProductController extends Controller
             'stock'=>'required|integer',
             'comment'=>'required|max:140',
         ]);
+
         return redirect()->route('products.create')->with('message','登録が完了しました');
-    
     }
 
     public function show($id)
@@ -96,6 +96,7 @@ class ProductController extends Controller
             'comment' => $request->input('comment'),
             // 'img_path' => $image_path
         ];
+        return view('edit', ['products' => $products, 'companies' => $companies] )->with('message','更新が完了しました'); 
 
         if($image){
             $file_name = $image->getClientOriginalName();
@@ -108,11 +109,10 @@ class ProductController extends Controller
 
         }else{
             $model->newImage($array,$id);
+    
         }
-        
-
         $model->newImage ($array,$id);
-        return view('edit', ['products' => $products, 'companies' => $companies] )->with('message','更新が完了しました');       
+        
     }
 
     public function update(Request $request, $id)

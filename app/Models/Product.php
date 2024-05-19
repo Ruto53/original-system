@@ -80,10 +80,10 @@ class Product extends Model
         $products = DB::table('products') 
                                                 ->insert([ 
                                                            'company_id' => $request->input('company-id'),
-                                                           'product_name' => $request->input('name'),
-                                                           'price'       => $request->input('kakaku'),
+                                                           'product_name' => $request->input('product_name'),
+                                                           'price'       => $request->input('price'),
                                                            'stock'       => $request->input('stock'),
-                                                           'comment'    => $request->input('shosai'),
+                                                           'comment'    => $request->input('comment'),
                                                            'img_path'    => $img_path,
                                                         ]);
        
