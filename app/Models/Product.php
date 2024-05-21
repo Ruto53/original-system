@@ -86,7 +86,7 @@ class Product extends Model
                                                            'comment'    => $request->input('comment'),
                                                            'img_path'    => $img_path,
                                                         ]);
-       
+    
     }
     
    

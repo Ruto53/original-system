@@ -53,30 +53,29 @@
         </div>
         <div class="col-12 mb-2 mt-2">
             <div class="form-group">
-            <textarea class="form-control" name="comment" value="{{ $products->comment }}" style="height:100px" name="shosai" placeholder="コメント"></textarea>
+            <textarea class="form-control" name="comment" value="{{ $products->comment }}" style="height:100px" name="comment" placeholder="コメント"></textarea>
             @error('comment')
         　　　<span style="color:red;">>コメントを140文字以内で入力してください</span>
         　　　@enderror
             </div>
         </div>
-         <form action="#" method="post" enctype="multipart/form-data">
-         <p> <p class="text-left"></p><br />
+        <form action="#" method="post" enctype="multipart/form-data">
+         <p> <p class="text-right"></p><br />
          <input type="file" name="filename" size="50" text-align:left;/><br />
          </p>
          </form>
          </div>
          </div>     
       <div class="form-group">
-        <label for="products_name">{{ __('商品の編集') }}<span class="badge badge-danger ml-2">{{ __('必須') }}</span></label>
+        <label for="products_name">{{ __('商品の編集') }}<span class="badge badge-da <input type="file" name="img_path" size="50" text-align:left;/><br/> nger ml-2">{{ __('必須') }}</span></label>
         <input type="text" class="form-control" name="products_name" id="products_name">
       </div>
-      <div class="d-flex justify-content-between pt-3">
         <a href="{{ route('products.index') }}" class="btn btn-outline-secondary" role="button">
             <i class="fa fa-reply mr-1" aria-hidden="true"></i>{{ __('一覧画面へ') }}
         </a>
         <button type="submit">
-        <input type="file" name="img_path" size="50" text-align:left;/><br/> 
         <td><a href="{{ route('products.edit', ['id'=> $products->id]) }}" class="btn btn-info">更新</a></td>
+
         </button>
       </div>
     </fieldset>

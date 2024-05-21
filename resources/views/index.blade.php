@@ -56,7 +56,7 @@
             <td style="text-align:right">{{ $product->stock }}本</td>
             <td style="text-align:right">{{ $product->company_name }}</td>
             <td style="text-align:right">{{ $product->comment }}</td>
-            <td><img src="{{ asset($product->img_path) }}"width:100px></td>
+            <td><img src="{{ asset($product->img_path) }}"width=100px></td>
             <td style="text-align:center">
             <form action="{{route('products.destroy',$product->id)}}"method="POST">
             @csrf

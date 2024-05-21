@@ -15,13 +15,14 @@
 <div style="text-align:right;">
 <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
     @csrf
+    @if(session('successMessage'))
+        {{ session('successMessage') }}
+    @endif    
      
      <div class="row">
         <div class="col-12 mb-2 mt-2">
             <div class="form-group">
-            @if(session('message'))
-            {{ session('message') }}
-            @endif    
+        
                 <input type="text" name="product_name" class="form-control" placeholder="商品名">
                 @error('product_name')
                 <span style="color:red;">商品名を20文字以内で入力してください</span>

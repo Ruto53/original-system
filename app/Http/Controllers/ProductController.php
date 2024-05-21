@@ -19,7 +19,7 @@ class ProductController extends Controller
 
     {   
         $keyword = $request->input('keyword');
-        $company_id = $request->input('company_id');
+        $company_id = $request->input('company-id');
         $companies = company::all();
 
         $model = new Product();
@@ -52,7 +52,8 @@ class ProductController extends Controller
       }
         
         $registerProduct = $model->InsertProducts($request,$img_path);
-       
+        return redirect()->route('products.create')->with('successMessage', '登録に成功しました。');
+
         $request->validate([
             'product_name'=>'required|max:20',
             'company-id'=>'required|integer',
@@ -61,7 +62,7 @@ class ProductController extends Controller
             'comment'=>'required|max:140',
         ]);
 
-        return redirect()->route('products.create')->with('message','登録が完了しました');
+        
     }
 
     public function show($id)
@@ -90,13 +91,19 @@ class ProductController extends Controller
 
         $array = [
             'product_name' => $request->input('product_name'),
-            'company_id' => $request->input('company_id'),
+            'company-id' => $request->input('company-id'),
             'price' => $request->input('price'),
             'stock' => $request->input('stock'),
             'comment' => $request->input('comment'),
             // 'img_path' => $image_path
         ];
         return view('edit', ['products' => $products, 'companies' => $companies] )->with('message','更新が完了しました'); 
+
+        $validator = Valiator::make($request->all(),[
+            'price' => 'required',
+            'stock' => 'required',
+            'comment' => 'required',
+        ]);    
 
         if($image){
             $file_name = $image->getClientOriginalName();

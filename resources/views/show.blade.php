@@ -19,9 +19,7 @@
         <div class="col-12 mb-2 mt-2">
             <div class="form-group">
             <label class="col-sm-2 col-form-label">商品画像</label>    
-                {{ $products->img_path }}  
-                asset: {{ asset('img/天然水.png')}}<br>
-            <img src="{{ asset('img/天然水.png') }}" alt="">                  
+               {{ $products->img_path }}    
             </div>
         </div>
         <div class="col-12 mb-2 mt-2">
@@ -33,7 +31,7 @@
         <div class="col-12 mb-2 mt-2">
             <div class="form-group">
             <label class="col-sm-2 col-form-label">メーカー名</label>    
-                {{ $products->manufacture_name }}                
+                {{ $products->company_name }}                
             </div>
         </div>
         <div class="col-12 mb-2 mt-2">
