@@ -46,12 +46,17 @@ class Product extends Model
                                                ->where('products.id', '=', $id) ->delete();
     }
 
-    public function updateProducts($request, $products)
-    {
-
-        ([
-            'product_name' => $request->product_name
-        ])->save();
+    public function updateProducts($request, $products){
+        $products = DB::table('products')
+                                              ->insert([  
+                                                          'company_id' => $data->input('company-id'),
+                                                          'product_name' => $data->input('product_name'),
+                                                          'price'       => $data->input('price'),
+                                                          'stock'       => $data->input('stock'),
+                                                          'comment'     => $data->input('comment'),
+                                                          'img_path'    => $img_path,
+                                                      ])->save();               
+           
     }
     
     public function registArticle($request,$img_path) {

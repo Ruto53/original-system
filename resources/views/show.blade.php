@@ -7,6 +7,9 @@
         <div class="pull-left">
             <h2 style="font-size:1rem;">商品情報詳細画面</h2>
         </div>
+        @if(session('successMessage'))
+        {{ session('successMessage') }}
+        @endif    
         <div class="pull-right">
             <a class="btn btn-success" href="{{ url('/products') }}">戻る</a>
         </div>

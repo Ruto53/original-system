@@ -97,7 +97,7 @@ class ProductController extends Controller
             'comment' => $request->input('comment'),
             // 'img_path' => $image_path
         ];
-        return view('edit', ['products' => $products, 'companies' => $companies] )->with('message','更新が完了しました'); 
+        return view('edit', ['products' => $products,'companies' => $companies] )->with('succesmessage','更新が完了しました'); 
 
         $validator = Valiator::make($request->all(),[
             'price' => 'required',
@@ -128,7 +128,7 @@ class ProductController extends Controller
         $updateProducts = $this->products->updateProducts($request, $products);
 
         return redirect()->route('products.index');
-
+        
         $validator = Valiator::make($request->all(),[
             'price' => 'required',
             'stock' => 'required',
@@ -139,14 +139,6 @@ class ProductController extends Controller
             ->withInput()
             ->withErrors($validator);
         }    
-        $products = Product::find($id);
-        $products->price = $request->price;
-        $products->stock = $request->stock;
-        $products->comment = $request->comment;
-        $products->save();
-
-
-        return redirect()->route('products.index');
     }
 
     public function showRegistForm() {
