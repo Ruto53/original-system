@@ -66,7 +66,7 @@
         <div class="col-12 mb-2 mt-2">
             <div class="form-group">
             <textarea class="form-control" style="height:100px" name="comment" placeholder="コメント"></textarea>
-            @error('shosai')
+            @error('comment')
                <span style="color:red;">コメントを140文字以内で入力してください</span>
                @enderror
             </div>

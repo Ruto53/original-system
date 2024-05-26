@@ -15,7 +15,7 @@ class ProductController extends Controller
         return 'products/index';
     }
 
-    public function index(Request $request)
+    public function index(Request $request)//一覧画面
 
     {   
         $keyword = $request->input('keyword');
@@ -36,7 +36,7 @@ class ProductController extends Controller
        
     }
 
-    public function store(ArticleRequest $request)
+    public function store(ArticleRequest $request)//登録画面
     {   
        
         $model = new Product();
@@ -65,29 +65,63 @@ class ProductController extends Controller
         
     }
 
-    public function show($id)
+    public function show(Request $request,$id) //詳細画面
     {
         $model = new Product();
         $products = $model->getCompaniesList($id);
 
-
-        return view ('show',['products' => $products]);
+        return view ('show',['products' => $products],compact('products'));
+        
 
     }
 
     public function destroy($id)
     {   
-        $model = new Product;
+         $model = new Product;
         $model -> destroyProduct($id);
         return redirect()->route('products.index');
     }
     
-    public function edit(Request $request, $id)
+    public function edit(Request $request, $id)//編集画面
     {   
         $companies = company::all();
         $products = Product::find($id);
         $image = $request->file('img_path');
         $model = new Product();
+
+        if($image){
+            $file_name = $image->getClientOriginalName();
+            $image->storeAs('public/img',$file_name);
+            $img_path = 'storage/img'.$file_name;
+
+            $array['img_path'] = $image_path;
+
+        }else{
+            $img_path =null; 
+    
+        }
+
+        $registerProduct = $model->InsertProducts($request,$img_path);
+        return view('edit', ['products' => $products,'companies' => $companies] )->with('succesmessage','更新が完了しました'); 
+
+
+        $request->validate([
+            'product_name'=>'required|max:20',
+            'company-id'=>'required|integer',
+            'price'=>'required|integer',
+            'stock'=>'required|integer',
+            'comment'=>'required|max:140',
+        ]);
+       
+    }
+    
+    public function update(ArticleRequest $request, $id)
+    {   
+        $products = Product::find($id);
+        $updateProducts = $this->products->updateProducts($request, $products);
+        $model->newImage($array,$id);
+
+        return redirect()->route('products.index');
 
         $array = [
             'product_name' => $request->input('product_name'),
@@ -97,49 +131,9 @@ class ProductController extends Controller
             'comment' => $request->input('comment'),
             // 'img_path' => $image_path
         ];
-        return view('edit', ['products' => $products,'companies' => $companies] )->with('succesmessage','更新が完了しました'); 
-
-        $validator = Valiator::make($request->all(),[
-            'price' => 'required',
-            'stock' => 'required',
-            'comment' => 'required',
-        ]);    
-
-        if($image){
-            $file_name = $image->getClientOriginalName();
-            $image->storeAs('public/img',$file_name);
-            $img_path = 'storage/img'.$file_name;
-
-            $array['img_path'] = $image_path;
-
-            $model->newImage($array,$id);
-
-        }else{
-            $model->newImage($array,$id);
-    
-        }
-        $model->newImage ($array,$id);
         
     }
-
-    public function update(Request $request, $id)
-    {   
-        $products = Product::find($id);
-        $updateProducts = $this->products->updateProducts($request, $products);
-
-        return redirect()->route('products.index');
-        
-        $validator = Valiator::make($request->all(),[
-            'price' => 'required',
-            'stock' => 'required',
-            'comment' => 'required',
-        ]);
-        if($validator->falis()){
-            return redirect('products/'.$id.'/edit')
-            ->withInput()
-            ->withErrors($validator);
-        }    
-    }
+   
 
     public function showRegistForm() {
 

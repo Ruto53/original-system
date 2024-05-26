@@ -22,7 +22,7 @@
         <div class="col-12 mb-2 mt-2">
             <div class="form-group">
             <label class="col-sm-2 col-form-label">商品画像</label>    
-               {{ $products->img_path }}    
+            <img src="{{ asset($products->img_path) }}"width=200px>
             </div>
         </div>
         <div class="col-12 mb-2 mt-2">

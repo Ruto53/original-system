@@ -3,8 +3,11 @@
 @section('content')
 <div class="container small">
   <h1>商品情報編集画面</h1>
-  <form action="{{ route('products.update', ['id'=>$products->id]) }}" method="POST">
+  <form action="{{ route('products.update', ['id'=>$products->id]) }}" method="POST" enctype="multipart/form-data">
   @csrf
+  @if(session('successMessage'))
+        {{ session('successMessage') }}
+    @endif    
     <fieldset>
     <div class="pull-right">
             <a class="btn btn-success" href="{{ url('/products') }}">戻る</a>
@@ -17,6 +20,9 @@
         <div class="col-12 mb-2 mt-2">
             <div class="form-group">
                 <input type="text" name="product_name" value="{{ $products->product_name }}"  class="form-control" placeholder="商品名">
+                @error('product_name')
+                <span style="color:red;">商品名を20文字以内で入力してください</span>
+                @enderror
             </div>        
         </div>  
         <div class="left">
@@ -59,24 +65,19 @@
         　　　@enderror
             </div>
         </div>
-        <form action="#" method="post" enctype="multipart/form-data">
-         <p> <p class="text-right"></p><br />
-         <input type="file" name="filename" size="50" text-align:left;/><br />
+         
+        <div class="col-12 mb-2 mt-2">
+         <p> <p class="text-right"></p><br/>
+         <input type="file" name="img_path" size="50" text-align:left;/><br/>
          </p>
-         </form>
-         </div>
-         </div>     
-      <div class="form-group">
-        <label for="products_name">{{ __('商品の編集') }}<span class="badge badge-da <input type="file" name="img_path" size="50" text-align:left;/><br/> nger ml-2">{{ __('必須') }}</span></label>
-        <input type="text" class="form-control" name="products_name" id="products_name">
-      </div>
+        </div> 
+        
         <a href="{{ route('products.index') }}" class="btn btn-outline-secondary" role="button">
             <i class="fa fa-reply mr-1" aria-hidden="true"></i>{{ __('一覧画面へ') }}
         </a>
-        <button type="submit">
-        <td><a href="{{ route('products.edit', ['id'=> $products->id]) }}" class="btn btn-info">更新</a></td>
-
+        <button type="submit" class="btn btn-primary w-100">更新</button>  
         </button>
+
       </div>
     </fieldset>
   </form>

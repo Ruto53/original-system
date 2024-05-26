@@ -39,7 +39,7 @@ class Product extends Model
                                                 ->select('products.*','companies.company_name')
                                                 ->where('products.id', '=', $id) ->first();
         return $products;                                        
-    } 
+    }   
 
     public function destroyProduct($id) {
         $products = DB::table('products')
@@ -55,7 +55,8 @@ class Product extends Model
                                                           'stock'       => $data->input('stock'),
                                                           'comment'     => $data->input('comment'),
                                                           'img_path'    => $img_path,
-                                                      ])->save();               
+                                                      ])->save();   
+        return $products;                                                          
            
     }
     
@@ -81,7 +82,7 @@ class Product extends Model
                                                        
     }
     
-    public function InsertProducts($request,$img_path) {
+    public function InsertProducts($request,$img_path)  {
         $products = DB::table('products') 
                                                 ->insert([ 
                                                            'company_id' => $request->input('company-id'),
