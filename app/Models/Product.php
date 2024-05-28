@@ -46,7 +46,7 @@ class Product extends Model
                                                ->where('products.id', '=', $id) ->delete();
     }
 
-    public function updateProducts($request, $products){
+    public function updateProducts($request,$products) {
         $products = DB::table('products')
                                               ->insert([  
                                                           'company_id' => $data->input('company-id'),

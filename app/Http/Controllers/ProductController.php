@@ -85,9 +85,8 @@ class ProductController extends Controller
     public function edit(Request $request, $id)//編集画面
     {   
         $companies = company::all();
-        $products = Product::find($id);
         $image = $request->file('img_path');
-        $model = new Product();
+        $model= new Product();
 
         if($image){
             $file_name = $image->getClientOriginalName();
@@ -102,7 +101,7 @@ class ProductController extends Controller
         }
 
         $registerProduct = $model->InsertProducts($request,$img_path);
-        return view('edit', ['products' => $products,'companies' => $companies] )->with('succesmessage','更新が完了しました'); 
+        return view('edit', ['products' => $products,'companies' => $companies] ); 
 
 
         $request->validate([
@@ -118,10 +117,11 @@ class ProductController extends Controller
     public function update(ArticleRequest $request, $id)
     {   
         $products = Product::find($id);
-        $updateProducts = $this->products->updateProducts($request, $products);
+        $model= new Product();
+        $updateProducts=$model->updateProducts($request, $products);
         $model->newImage($array,$id);
 
-        return redirect()->route('products.index');
+        return redirect()->route('products.edit');
 
         $array = [
             'product_name' => $request->input('product_name'),
@@ -139,7 +139,7 @@ class ProductController extends Controller
 
         $companies = company::all();
 
-        return view('regist',['companies' => $companies]);
+        return view('regist',['companies' => $companies])->with('succesmessage','更新が完了しました');
     
     }
 
