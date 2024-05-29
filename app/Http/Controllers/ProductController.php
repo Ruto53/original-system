@@ -82,27 +82,34 @@ class ProductController extends Controller
         return redirect()->route('products.index');
     }
     
+
+    public function displayedit($id)//編集画面表示
+    {   
+        $companies = DB::table('companies')->get();
+        $model = new Product();
+        $products = $model->getCompaniesList($id);
+
+        return view('edit',['companies'=> $companies, 'products' => $products]);
+    }
+    
     public function edit(Request $request, $id)//編集画面
     {   
-        $companies = company::all();
+       
+        $model = new Product();
         $image = $request->file('img_path');
-        $model= new Product();
-
+       
         if($image){
             $file_name = $image->getClientOriginalName();
             $image->storeAs('public/img',$file_name);
-            $img_path = 'storage/img'.$file_name;
-
-            $array['img_path'] = $image_path;
-
-        }else{
-            $img_path =null; 
-    
-        }
-
+            $img_path ='storage/img/'.$file_name;
+           
+      }else{
+        $img_path =null; 
+      }
+        
         $registerProduct = $model->InsertProducts($request,$img_path);
-        return view('edit', ['products' => $products,'companies' => $companies] ); 
 
+        return redirect()->route('products.edit');
 
         $request->validate([
             'product_name'=>'required|max:20',
@@ -111,8 +118,10 @@ class ProductController extends Controller
             'stock'=>'required|integer',
             'comment'=>'required|max:140',
         ]);
-       
+
+        
     }
+
     
     public function update(ArticleRequest $request, $id)
     {   
@@ -122,6 +131,7 @@ class ProductController extends Controller
         $model->newImage($array,$id);
 
         return redirect()->route('products.edit');
+        ;
 
         $array = [
             'product_name' => $request->input('product_name'),
@@ -142,22 +152,6 @@ class ProductController extends Controller
         return view('regist',['companies' => $companies])->with('succesmessage','更新が完了しました');
     
     }
-
-    public function registSubmit(ArticleRequest $request) {
-        DB::beginTransaction();
-
-        try {
-
-            $model = new Products();
-            $model->registProducts($request);  
-            DB::commit();
-        } catch (\Exception $e) {
-            DB::rollback();
-            DB::commit();
-            return back();
-        }
-          return redirect(route('regist')); 
-        }
     
     public function showList() {
         return view('list');
