@@ -83,7 +83,7 @@ class ProductController extends Controller
     }
     
 
-    public function displayedit($id)//編集画面表示
+    public function edit($id)//編集画面表示
     {   
         $companies = DB::table('companies')->get();
         $model = new Product();
@@ -92,7 +92,7 @@ class ProductController extends Controller
         return view('edit',['companies'=> $companies, 'products' => $products]);
     }
     
-    public function edit(Request $request, $id)//編集画面
+    public function registedit(Request $request, $id)//編集画面
     {   
        
         $model = new Product();

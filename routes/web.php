@@ -26,7 +26,6 @@ Route::get('/products/show/{id}','App\Http\Controllers\ProductController@show')-
 Route::post('/products/store','App\Http\Controllers\ProductController@store')->name('products.store');
 Route::delete('/products/{id}','App\Http\Controllers\ProductController@destroy')->name('products.destroy');
 Route::get('/products/edit/{id}','App\Http\Controllers\ProductController@edit')->name('products.edit');
-Route::post('/products/edit/{id}','App\Http\Controllers\ProductController@update')->name('products.edit');
 Route::post('/products/update/{id}','App\Http\Controllers\ProductController@update')->name('products.update');
 Route::get('/products/regist','ProductController@showRegistForm')->name('regist');
 Route::post('/products/regist','ProductController@registSubmit')->name('submit');
