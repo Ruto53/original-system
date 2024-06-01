@@ -64,7 +64,7 @@
             <button type="submit" class="btn btn-sm btn-danger" onclick='return confirm("削除しますか？");'>削除</button>
             </form>
             </td>
-            <td><a href="{{ route('products.show', ['id'=>$products->id])}}" class="btn btn-primary">詳細</a></td>
+            <td><a href="{{ route('products.show', ['id'=>$product->id])}}" class="btn btn-primary">詳細</a></td>
         </tr>
         @endforeach
     </table>

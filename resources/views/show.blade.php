@@ -56,7 +56,7 @@
             </div>
         </div>
         <div class="col-12 mb-2 mt-2">
-        <td><a href="{{ route('products.edit', ['id'=> $products->id]) }}" class="btn btn-info">編集</a></td>
+        <td><a href="{{ route('products.edit', ['id'=> $product->id]) }}" class="btn btn-info">編集</a></td>
         </div>
     </div>
 </div>
