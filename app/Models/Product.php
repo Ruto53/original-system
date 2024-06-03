@@ -35,11 +35,22 @@ class Product extends Model
 
     } 
     public function getCompaniesList($id) {
-        $products = DB::table("products")       ->join('companies', 'company_id', '=', 'companies.id')
+        $products = DB::table('products')       ->join('companies', 'company_id', '=', 'companies.id')
                                                 ->select('products.*','companies.company_name')
                                                 ->where('products.id', '=', $id) ->first();
         return $products;                                        
     }   
+
+    public function registedit($requst,$img_path, $id){
+        $products = DB::table('products')      ->where('products_id', '=', '$id')
+                                               ->update([
+                                                'product_name' => $data->input('product_name'),
+                                                'price'       => $data->input('price'),
+                                                'stock'       => $data->input('stock'),
+                                                'comment'     => $data->input('comment'),
+                                                'img_path'    => $img_path,
+                                              ]);               
+    }
 
     public function destroyProduct($id) {
         $products = DB::table('products')
@@ -94,9 +105,6 @@ class Product extends Model
                                                         ]);
     
     }
-    
-   
-
 
 
 

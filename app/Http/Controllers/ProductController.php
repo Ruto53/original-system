@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
-    public function redirectPath ()
+        public function redirectPath ()
     {
         return 'products/index';
     }
@@ -89,7 +89,7 @@ class ProductController extends Controller
         $model = new Product();
         $products = $model->getCompaniesList($id);
 
-        return view('edit',['companies'=> $companies, 'products' => $products]);
+        return view('edit',['companies'=> $companies, 'product' => $product]);
     }
     
     public function registedit(Request $request, $id)//編集画面
@@ -97,13 +97,15 @@ class ProductController extends Controller
        
         $model = new Product();
         $image = $request->file('img_path');
-       
+
         if($image){
             $file_name = $image->getClientOriginalName();
             $image->storeAs('public/img',$file_name);
             $img_path ='storage/img/'.$file_name;
+            $model->registedit($request, $img_path, $id);
            
       }else{
+        $model->registeditNoImg($request, $id);
         $img_path =null; 
       }
         
