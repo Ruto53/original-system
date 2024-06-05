@@ -41,35 +41,52 @@ class Product extends Model
         return $products;                                        
     }   
 
+    //更新処理（画像あり）
     public function registedit($requst,$img_path, $id){
         $products = DB::table('products')      ->where('products_id', '=', '$id')
                                                ->update([
-                                                'product_name' => $data->input('product_name'),
-                                                'price'       => $data->input('price'),
-                                                'stock'       => $data->input('stock'),
-                                                'comment'     => $data->input('comment'),
+                                                'product_name' => $request->input('product_name'),
+                                                'price'       => $request->input('price'),
+                                                'stock'       => $request->input('stock'),
+                                                'comment'     => $request->input('comment'),
                                                 'img_path'    => $img_path,
                                               ]);               
     }
+    
+    //更新処理（画像なし）
+    public function registeditnoimg($requst,$img_path, $id){
+        $products = DB::table('products')      ->where('products_id', '=', '$id')
+                                               ->update([
+                                                'product_name' => $request->input('product_name'),
+                                                'price'       => $request->input('price'),
+                                                'stock'       => $request->input('stock'),
+                                                'comment'     => $request->input('comment'),
+                                              ]);               
+    }
+
+    
+    public function updateProducts($request,$products) {
+        $products = DB::table('products')
+                                              ->insert([  
+                                                          'company_id' => $request->input('company-id'),
+                                                          'product_name' => $request->input('product_name'),
+                                                          'price'       => $request->input('price'),
+                                                          'stock'       => $request->input('stock'),
+                                                          'comment'     => $request->input('comment'),
+                                                          'img_path'    => $img_path,
+                                                      ])->save();   
+        return $products;                                                          
+           
+    }
+
 
     public function destroyProduct($id) {
         $products = DB::table('products')
                                                ->where('products.id', '=', $id) ->delete();
     }
 
-    public function updateProducts($request,$products) {
-        $products = DB::table('products')
-                                              ->insert([  
-                                                          'company_id' => $data->input('company-id'),
-                                                          'product_name' => $data->input('product_name'),
-                                                          'price'       => $data->input('price'),
-                                                          'stock'       => $data->input('stock'),
-                                                          'comment'     => $data->input('comment'),
-                                                          'img_path'    => $img_path,
-                                                      ])->save();   
-        return $products;                                                          
-           
-    }
+
+   
     
     public function registArticle($request,$img_path) {
         $products = DB::table('products')

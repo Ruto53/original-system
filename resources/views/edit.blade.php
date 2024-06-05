@@ -67,15 +67,17 @@
         </div>
          
         <div class="col-12 mb-2 mt-2">
-         <p> <p class="text-right"></p><br/>
-         <input type="file" name="img_path" size="50" text-align:left;/><br/>
-         </p>
+        　<img src="{{ asset($products->img_path )}}" alt="商品画像"　class="img_view" width=300px>
         </div> 
-        
+        <div class="col-12 mb-2 mt-2">
+         <label for="" class="form-label">画像</label>
+         <input type="file" name="img_path">
+        </div> 
+
         <a href="{{ route('products.index') }}" class="btn btn-outline-secondary" role="button">
             <i class="fa fa-reply mr-1" aria-hidden="true"></i>{{ __('一覧画面へ') }}
         </a>
-        <button type="submit" class="btn btn-primary w-100">更新</button>  
+        <button type="submit" class="btn btn-primary w-100">登録</button>  
         </button>
 
       </div>

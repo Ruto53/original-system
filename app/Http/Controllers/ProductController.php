@@ -89,9 +89,10 @@ class ProductController extends Controller
         $model = new Product();
         $products = $model->getCompaniesList($id);
 
-        return view('edit',['companies'=> $companies, 'product' => $product]);
+        return view('edit',['companies'=> $companies, 'products' => $products]);
     }
     
+
     public function registedit(Request $request, $id)//編集画面
     {   
        
@@ -123,7 +124,6 @@ class ProductController extends Controller
 
         
     }
-
     
     public function update(ArticleRequest $request, $id)
     {   
@@ -141,11 +141,10 @@ class ProductController extends Controller
             'price' => $request->input('price'),
             'stock' => $request->input('stock'),
             'comment' => $request->input('comment'),
-            // 'img_path' => $image_path
+            // 'img_path' => $img_path
         ];
         
     }
-   
 
     public function showRegistForm() {
 
