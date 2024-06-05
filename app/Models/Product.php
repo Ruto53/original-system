@@ -65,17 +65,10 @@ class Product extends Model
     }
 
     
-    public function updateProducts($request,$products) {
+    public function updateProducts($array,$id) {
         $products = DB::table('products')
-                                              ->insert([  
-                                                          'company_id' => $request->input('company-id'),
-                                                          'product_name' => $request->input('product_name'),
-                                                          'price'       => $request->input('price'),
-                                                          'stock'       => $request->input('stock'),
-                                                          'comment'     => $request->input('comment'),
-                                                          'img_path'    => $img_path,
-                                                      ])->save();   
-        return $products;                                                          
+                                            ->where('id',$id)
+                                            ->update($array);
            
     }
 
@@ -99,15 +92,6 @@ class Product extends Model
                                                            'img_path'    => $img_path,
                                                          ]);               
                                              
-    }
-
-    public function newImage($array,$id) {
-        $products = DB::table('products')      
-                                                
-                                                ->where ('id',$id)                                 
-                                                ->update($array);
-
-                                                       
     }
     
     public function InsertProducts($request,$img_path)  {

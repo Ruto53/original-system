@@ -127,30 +127,32 @@ class ProductController extends Controller
     
     public function update(ArticleRequest $request, $id)
     {   
-        $products = Product::find($id);
-        $model= new Product();
-        $updateProducts=$model->updateProducts($request, $products);
-        $model->newImage($array,$id);
-
-        return redirect()->route('products.edit');
-        ;
-
+        
         $array = [
             'product_name' => $request->input('product_name'),
             'company-id' => $request->input('company-id'),
             'price' => $request->input('price'),
             'stock' => $request->input('stock'),
             'comment' => $request->input('comment'),
-            // 'img_path' => $img_path
+            'img_path' => $img_path,
         ];
+
+        if($image){
+            $file_name = $image->getClientOriginalName();
+            $image->storeAs('public/img',$file_name);
+            $img_path ='storage/img/'.$file_name;
+        }    
+        $updateProducts=$model->updateProducts($array,$id);
+        $updateProducts=$model->updateProducts($array,$img_path);
         
+        return redirect()->route('products.edit');
     }
 
     public function showRegistForm() {
 
         $companies = company::all();
 
-        return view('regist',['companies' => $companies])->with('succesmessage','更新が完了しました');
+        return view('regist',['companies' => $companies])->with('succesmessage','登録が完了しました');
     
     }
     
