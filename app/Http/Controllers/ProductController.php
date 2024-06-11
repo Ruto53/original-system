@@ -104,6 +104,7 @@ class ProductController extends Controller
             $image->storeAs('public/img',$file_name);
             $img_path ='storage/img/'.$file_name;
             $model->registedit($request, $img_path, $id);
+
            
       }else{
         $model->registeditNoImg($request, $id);
@@ -134,16 +135,18 @@ class ProductController extends Controller
             'price' => $request->input('price'),
             'stock' => $request->input('stock'),
             'comment' => $request->input('comment'),
-            'img_path' => $img_path,
         ];
 
-        if($image){
+        $image  = $request->file('image');
+        if(isset($image)){
             $file_name = $image->getClientOriginalName();
             $image->storeAs('public/img',$file_name);
             $img_path ='storage/img/'.$file_name;
-        }    
-        $updateProducts=$model->updateProducts($array,$id);
-        $updateProducts=$model->updateProducts($array,$img_path);
+        } else{
+            $img_path[]  = 'img_path';
+            $updateProducts　= $model->updateProducts($array,$id);
+        }
+        
         
         return redirect()->route('products.edit');
     }
