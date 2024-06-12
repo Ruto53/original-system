@@ -136,17 +136,16 @@ class ProductController extends Controller
             'stock' => $request->input('stock'),
             'comment' => $request->input('comment'),
         ];
+       
+        $image  = $request->file("img_path");
 
-        $image  = $request->file('image');
         if(isset($image)){
             $file_name = $image->getClientOriginalName();
             $image->storeAs('public/img',$file_name);
             $img_path ='storage/img/'.$file_name;
-        } else{
-            $img_path[]  = 'img_path';
-            $updateProducts　= $model->updateProducts($array,$id);
+            $array['img_path']=$img_path;
         }
-        
+        $updateProducts　= $model->updateProducts($array,$id);
         
         return redirect()->route('products.edit');
     }
