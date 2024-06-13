@@ -128,7 +128,8 @@ class ProductController extends Controller
     
     public function update(ArticleRequest $request, $id)
     {   
-        
+        $model = new Product();
+
         $array = [
             'product_name' => $request->input('product_name'),
             'company-id' => $request->input('company-id'),
@@ -136,7 +137,7 @@ class ProductController extends Controller
             'stock' => $request->input('stock'),
             'comment' => $request->input('comment'),
         ];
-       
+        
         $image  = $request->file("img_path");
 
         if(isset($image)){
