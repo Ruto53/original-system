@@ -73,8 +73,7 @@
          <label for="" class="form-label">画像</label>
          <input type="file" name="img_path">
         </div> 
-
-        <a href="{{ route('products.index') }}" class="btn btn-outline-secondary" role="button">
+        <a href="{{ route('products.index'}}" class="btn btn-outline-secondary" role="button">
             <i class="fa fa-reply mr-1" aria-hidden="true"></i>{{ __('一覧画面へ') }}
         </a>
         <button type="submit" class="btn btn-primary w-100">登録</button>  

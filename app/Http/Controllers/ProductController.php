@@ -77,7 +77,7 @@ class ProductController extends Controller
 
     public function destroy($id)
     {   
-         $model = new Product;
+        $model = new Product;
         $model -> destroyProduct($id);
         return redirect()->route('products.index');
     }
@@ -99,22 +99,20 @@ class ProductController extends Controller
         $model = new Product();
         $image = $request->file('img_path');
 
-        if($image){
+       if($image){
             $file_name = $image->getClientOriginalName();
             $image->storeAs('public/img',$file_name);
             $img_path ='storage/img/'.$file_name;
             $model->registedit($request, $img_path, $id);
-
-           
-      }else{
+        }else{
         $model->registeditNoImg($request, $id);
         $img_path =null; 
-      }
-        
+        }
+
         $registerProduct = $model->InsertProducts($request,$img_path);
-
+        
         return redirect()->route('products.edit');
-
+       
         $request->validate([
             'product_name'=>'required|max:20',
             'company-id'=>'required|integer',
@@ -129,6 +127,7 @@ class ProductController extends Controller
     public function update(ArticleRequest $request, $id)
     {   
         $model = new Product();
+        $products = $model->getCompaniesList($id);
 
         $array = [
             'product_name' => $request->input('product_name'),
@@ -148,7 +147,7 @@ class ProductController extends Controller
         }
         $updateProducts　= $model->updateProducts($array,$id);
         
-        return redirect()->route('products.edit');
+        return redirect()->route('products.edit', ['id'=>$products->id]);
     }
 
     public function showRegistForm() {
