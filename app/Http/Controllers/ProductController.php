@@ -127,8 +127,7 @@ class ProductController extends Controller
     public function update(ArticleRequest $request, $id)
     {   
         $model = new Product();
-        $products = $model->getCompaniesList($id);
-
+        
         $array = [
             'product_name' => $request->input('product_name'),
             'company-id' => $request->input('company-id'),
@@ -147,7 +146,7 @@ class ProductController extends Controller
         }
         $updateProducts　= $model->updateProducts($array,$id);
         
-        return redirect()->route('products.edit', ['id'=>$products->id]);
+        return redirect()->route('products.edit', ['id'=>$id]);
     }
 
     public function showRegistForm() {
