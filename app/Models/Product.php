@@ -18,7 +18,7 @@ class Product extends Model
                                                        
      ];          
     public function getList($keyword,$company_id) {
-        $query = DB::table('products')->join('companies','company_id','=','companies.id')
+        $query = DB::table('products')->join('companies','products.company-id','=','companies.id')
                                          ->select('products.*','companies.company_name');
                                          
 
@@ -35,7 +35,7 @@ class Product extends Model
 
     } 
     public function getCompaniesList($id) {
-        $products = DB::table('products')       ->join('companies', 'company_id', '=', 'companies.id')
+        $products = DB::table('products')       ->join('companies', 'products.company-id', '=', 'companies.id')
                                                 ->select('products.*','companies.company_name')
                                                 ->where('products.id', '=', $id) ->first();
         return $products;                                        
