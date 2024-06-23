@@ -98,6 +98,7 @@ class ProductController extends Controller
        
         $model = new Product();
         $image = $request->file('img_path');
+    
 
        if($image){
             $file_name = $image->getClientOriginalName();
@@ -111,7 +112,7 @@ class ProductController extends Controller
 
         $registerProduct = $model->InsertProducts($request,$img_path);
         
-        return redirect()->route('products.edit');
+        return redirect()->route('products.edit')->with('succesmessage','登録が完了しました');
        
         $request->validate([
             'product_name'=>'required|max:20',
@@ -127,7 +128,7 @@ class ProductController extends Controller
     public function update(ArticleRequest $request, $id)
     {   
         $model = new Product();
-        
+
         $array = [
             'product_name' => $request->input('product_name'),
             'company-id' => $request->input('company-id'),
@@ -143,17 +144,18 @@ class ProductController extends Controller
             $image->storeAs('public/img',$file_name);
             $img_path ='storage/img/'.$file_name;
             $array['img_path']=$img_path;
+           
         }
         $updateProducts　= $model->updateProducts($array,$id);
         
-        return redirect()->route('products.edit', ['id'=>$id]);
+        return redirect()->route('products.edit',$id);
     }
 
     public function showRegistForm() {
 
         $companies = company::all();
 
-        return view('regist',['companies' => $companies])->with('succesmessage','登録が完了しました');
+        return view('regist',['companies' => $companies]);
     
     }
     
