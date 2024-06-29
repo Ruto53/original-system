@@ -95,11 +95,9 @@ class ProductController extends Controller
 
     public function registedit(Request $request, $id)//編集画面
     {   
-       
         $model = new Product();
         $image = $request->file('img_path');
     
-
        if($image){
             $file_name = $image->getClientOriginalName();
             $image->storeAs('public/img',$file_name);
@@ -111,9 +109,8 @@ class ProductController extends Controller
         }
 
         $registerProduct = $model->InsertProducts($request,$img_path);
+        return redirect()->route('products.edit');
         
-        return redirect()->route('products.edit')->with('succesmessage','登録が完了しました');
-       
         $request->validate([
             'product_name'=>'required|max:20',
             'company-id'=>'required|integer',
@@ -122,11 +119,12 @@ class ProductController extends Controller
             'comment'=>'required|max:140',
         ]);
 
-        
+       
     }
     
     public function update(ArticleRequest $request, $id)
     {   
+    
         $model = new Product();
 
         $array = [
@@ -148,7 +146,7 @@ class ProductController extends Controller
         }
         $updateProducts　= $model->updateProducts($array,$id);
         
-        return redirect()->route('products.edit',$id);
+        return redirect()->route('products.edit',$id)->with('successMessage', '登録に成功しました。');
     }
 
     public function showRegistForm() {

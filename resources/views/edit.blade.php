@@ -4,14 +4,16 @@
 <div class="container small">
   <h1>商品情報編集画面</h1>
   <form action="{{ route('products.update', ['id'=>$products->id]) }}" method="POST" enctype="multipart/form-data">
-  @csrf
-  @if(session('successMessage'))
-        {{ session('successMessage') }}
-    @endif    
-    <fieldset>
+ 
+   
     <div class="pull-right">
             <a class="btn btn-success" href="{{ url('/products') }}">戻る</a>
         </div>
+
+    @csrf
+      @if(session('successMessage'))
+     {{ session('successMessage') }}
+    @endif    
         <div class="col-12 mb-2 mt-2">
             <div class="form-group">
                 {{ $products->id }}                

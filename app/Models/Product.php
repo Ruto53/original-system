@@ -54,7 +54,7 @@ class Product extends Model
     }
     
     //更新処理（画像なし）
-    public function registeditnoimg($requst,$img_path, $id){
+    public function registeditnoimg($requst, $id){
         $products = DB::table('products')      ->where('products_id', '=', '$id')
                                                ->update([
                                                 'product_name' => $request->input('product_name'),
@@ -84,7 +84,7 @@ class Product extends Model
     public function registArticle($request,$img_path) {
         $products = DB::table('products')
                                                ->insert([  
-                                                           'company_id' => $data->input('company-id'),
+                                                           'company-id' => $data->input('company-id'),
                                                            'product_name' => $data->input('product_name'),
                                                            'price'       => $data->input('price'),
                                                            'stock'       => $data->input('stock'),
@@ -97,7 +97,7 @@ class Product extends Model
     public function InsertProducts($request,$img_path)  {
         $products = DB::table('products') 
                                                 ->insert([ 
-                                                           'company_id' => $request->input('company-id'),
+                                                           'company-id' => $request->input('company-id'),
                                                            'product_name' => $request->input('product_name'),
                                                            'price'       => $request->input('price'),
                                                            'stock'       => $request->input('stock'),
