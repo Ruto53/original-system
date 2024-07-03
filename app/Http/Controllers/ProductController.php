@@ -36,9 +36,9 @@ class ProductController extends Controller
        
     }
 
-    public function store(ArticleRequest $request)//登録画面
+    public function store(ArticleRequest $request)//新規登録画面
     {   
-       
+       try{
         $model = new Product();
         $image = $request->file('img_path');
        
@@ -50,9 +50,12 @@ class ProductController extends Controller
       }else{
         $img_path =null; 
       }
-        
+        DB::commit();
         $registerProduct = $model->InsertProducts($request,$img_path);
         return redirect()->route('products.create')->with('successMessage', '登録に成功しました。');
+    } catch (Exception $e) {   
+        DB::rollBack();
+    }    
 
         $request->validate([
             'product_name'=>'required|max:20',
@@ -77,11 +80,16 @@ class ProductController extends Controller
 
     public function destroy($id)
     {   
+     try{
         $model = new Product;
         $model -> destroyProduct($id);
+
+        DB::commit();
+    } catch (Exception $e) {   
+        DB::rollBack();
         return redirect()->route('products.index');
     }
-    
+    }
 
     public function edit($id)//編集画面表示
     {   
@@ -97,7 +105,7 @@ class ProductController extends Controller
     {   
         $model = new Product();
         $image = $request->file('img_path');
-    
+    try{
        if($image){
             $file_name = $image->getClientOriginalName();
             $image->storeAs('public/img',$file_name);
@@ -107,10 +115,12 @@ class ProductController extends Controller
         $model->registeditNoImg($request, $id);
         $img_path =null; 
         }
-
+        DB::commit();
         $registerProduct = $model->InsertProducts($request,$img_path);
         return redirect()->route('products.edit');
-        
+    } catch (Exception $e) {  
+        DB::rollBack();
+    }
         $request->validate([
             'product_name'=>'required|max:20',
             'company-id'=>'required|integer',
@@ -157,9 +167,7 @@ class ProductController extends Controller
     
     }
     
-    public function showList() {
-        return view('list');
-    }
+   
     
 
 

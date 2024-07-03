@@ -51,8 +51,10 @@
         </div>
         <div class="col-12 mb-2 mt-2">
             <div class="form-group">
-            <label class="col-sm-2 col-form-label">コメント</label>     
-            <textarea class="form-control" style="height:100px" name="comment" placeholder="コメント"></textarea>
+            <label class="col-sm-2 col-form-label">コメント</label>
+            <textarea class="form-control" style="height:100px" name="comment" placeholder="コメント">
+            {{ $products->comment }}   
+            </textarea>
             </div>
         </div>
         <div class="col-12 mb-2 mt-2">

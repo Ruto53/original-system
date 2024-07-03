@@ -35,47 +35,51 @@ class Product extends Model
 
     } 
     public function getCompaniesList($id) {
-        $products = DB::table('products')       ->join('companies', 'products.company-id', '=', 'companies.id')
-                                                ->select('products.*','companies.company_name')
-                                                ->where('products.id', '=', $id) ->first();
+        $products = DB::table('products')       
+                        ->join('companies', 'products.company-id', '=', 'companies.id')
+                        ->select('products.*','companies.company_name')
+                        ->where('products.id', '=', $id) ->first();
         return $products;                                        
     }   
 
     //更新処理（画像あり）
     public function registedit($requst,$img_path, $id){
-        $products = DB::table('products')      ->where('products_id', '=', '$id')
-                                               ->update([
-                                                'product_name' => $request->input('product_name'),
-                                                'price'       => $request->input('price'),
-                                                'stock'       => $request->input('stock'),
-                                                'comment'     => $request->input('comment'),
-                                                'img_path'    => $img_path,
-                                              ]);               
+        $products = DB::table('products')      
+                        ->where('products_id', '=', '$id')
+                        ->update([
+                                    'product_name' => $request->input('product_name'),
+                                    'price'       => $request->input('price'),
+                                    'stock'       => $request->input('stock'),
+                                    'comment'     => $request->input('comment'),
+                                    'img_path'    => $img_path,
+                                 ]);               
     }
     
     //更新処理（画像なし）
     public function registeditnoimg($requst, $id){
-        $products = DB::table('products')      ->where('products_id', '=', '$id')
-                                               ->update([
-                                                'product_name' => $request->input('product_name'),
-                                                'price'       => $request->input('price'),
-                                                'stock'       => $request->input('stock'),
-                                                'comment'     => $request->input('comment'),
-                                              ]);               
+        $products = DB::table('products')      
+                        ->where('products_id', '=', '$id')
+                        ->update([
+                                    'product_name' => $request->input('product_name'),
+                                    'price'       => $request->input('price'),
+                                    'stock'       => $request->input('stock'),
+                                    'comment'     => $request->input('comment'),
+                                ]);               
     }
 
     
     public function updateProducts($array,$id) {
         $products = DB::table('products')
-                                            ->where('id',$id)
-                                            ->update($array);
+                        ->where('id',$id)
+                        ->update($array);
            
     }
 
 
     public function destroyProduct($id) {
         $products = DB::table('products')
-                                               ->where('products.id', '=', $id) ->delete();
+                        ->where('products.id', '=', $id) 
+                        ->delete();
     }
 
 
@@ -83,27 +87,27 @@ class Product extends Model
     
     public function registArticle($request,$img_path) {
         $products = DB::table('products')
-                                               ->insert([  
-                                                           'company-id' => $data->input('company-id'),
-                                                           'product_name' => $data->input('product_name'),
-                                                           'price'       => $data->input('price'),
-                                                           'stock'       => $data->input('stock'),
-                                                           'comment'     => $data->input('comment'),
-                                                           'img_path'    => $img_path,
-                                                         ]);               
+                        ->insert([  
+                                    'company-id' => $data->input('company-id'),
+                                    'product_name' => $data->input('product_name'),
+                                    'price'       => $data->input('price'),
+                                    'stock'       => $data->input('stock'),
+                                    'comment'     => $data->input('comment'),
+                                    'img_path'    => $img_path,
+                                ]);               
                                              
     }
     
     public function InsertProducts($request,$img_path)  {
         $products = DB::table('products') 
-                                                ->insert([ 
-                                                           'company-id' => $request->input('company-id'),
-                                                           'product_name' => $request->input('product_name'),
-                                                           'price'       => $request->input('price'),
-                                                           'stock'       => $request->input('stock'),
-                                                           'comment'    => $request->input('comment'),
-                                                           'img_path'    => $img_path,
-                                                        ]);
+                        ->insert([ 
+                                    'company-id' => $request->input('company-id'),
+                                    'product_name' => $request->input('product_name'),
+                                    'price'       => $request->input('price'),
+                                    'stock'       => $request->input('stock'),
+                                    'comment'    => $request->input('comment'),
+                                    'img_path'    => $img_path,
+                                ]);
     
     }
 
