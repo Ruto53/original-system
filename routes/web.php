@@ -29,6 +29,7 @@ Route::get('/products/edit/{id}','App\Http\Controllers\ProductController@edit')-
 Route::post('/products/update/{id}','App\Http\Controllers\ProductController@update')->name('products.update');
 Route::get('/products/regist','ProductController@showRegistForm')->name('regist');
 Route::post('/products/regist','ProductController@registSubmit')->name('submit');
+Route::get('products/search','ProductController@search')->name('products.search');
 
 Auth::routes();
 

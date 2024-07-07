@@ -17,23 +17,14 @@ class Product extends Model
         'updated_at',                                               
                                                        
      ];          
-    public function getList($keyword,$company_id) {
-        $query = DB::table('products')->join('companies','products.company-id','=','companies.id')
-                                         ->select('products.*','companies.company_name');
-                                         
-
-    if(!empty($keyword)) {
-         $query->where('product_name', 'LIKE', "%{$keyword}%");
-         } 
-                                
-    if($company_id) {
-        $query->where('company_id',$company_id);
-         } 
-
-        $products = $query->get();
+    public function getList() {
+        $products = DB::table('products')
+                     ->join('companies','products.company-id','=','companies.id')
+                     ->select('products.*','companies.company_name');
         return $products;                            
 
     } 
+
     public function getCompaniesList($id) {
         $products = DB::table('products')       
                         ->join('companies', 'products.company-id', '=', 'companies.id')
@@ -110,11 +101,24 @@ class Product extends Model
                                 ]);
     
     }
+    
+    public function search($keyword, $searchCompany, $request)
+{
+    // products テーブルと companies テーブルを join
+    $query = DB::table('products')
+        ->join('companies', 'products.company_id', '=', 'companies.id')
+        ->select('products.*', 'companies.company_name');
 
+    if ($keyword) {
+        $query->where('products.product_name', 'like', "%{$keyword}%");
+    }
 
-
+    if ($searchCompany) {
+        $query->where('products.company_id', '=', $searchCompany);
+    }
+   
 }
 
 
 
-
+}

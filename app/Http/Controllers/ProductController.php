@@ -21,11 +21,11 @@ class ProductController extends Controller
         $keyword = $request->input('keyword');
         $company_id = $request->input('company-id');
         $companies = company::all();
-
         $model = new Product();
         $products = $model->getList($keyword,$company_id);
 
-        return view('index', ['products' => $products, 'companies' => $companies], compact('products', 'keyword') );  
+
+        return view('index', ['products' => $products, 'companies' => $companies]);  
     }
     
     public function create()
@@ -101,36 +101,36 @@ class ProductController extends Controller
     }
     
 
-    public function registedit(Request $request, $id)//編集画面
-    {   
-        $model = new Product();
-        $image = $request->file('img_path');
-    try{
-       if($image){
-            $file_name = $image->getClientOriginalName();
-            $image->storeAs('public/img',$file_name);
-            $img_path ='storage/img/'.$file_name;
-            $model->registedit($request, $img_path, $id);
-        }else{
-        $model->registeditNoImg($request, $id);
-        $img_path =null; 
-        }
-        DB::commit();
-        $registerProduct = $model->InsertProducts($request,$img_path);
-        return redirect()->route('products.edit');
-    } catch (Exception $e) {  
-        DB::rollBack();
-    }
-        $request->validate([
-            'product_name'=>'required|max:20',
-            'company-id'=>'required|integer',
-            'price'=>'required|integer',
-            'stock'=>'required|integer',
-            'comment'=>'required|max:140',
-        ]);
+    // public function registedit(Request $request, $id)//編集画面
+    // {   
+    //     $model = new Product();
+    //     $image = $request->file('img_path');
+    // try{
+    //    if($image){
+    //         $file_name = $image->getClientOriginalName();
+    //         $image->storeAs('public/img',$file_name);
+    //         $img_path ='storage/img/'.$file_name;
+    //         $model->registedit($request, $img_path, $id);
+    //     }else{
+    //     $model->registeditNoImg($request, $id);
+    //     $img_path =null; 
+    //     }
+    //     DB::commit();
+    //     $registerProduct = $model->InsertProducts($request,$img_path);
+    //     return redirect()->route('products.edit');
+    // } catch (Exception $e) {  
+    //     DB::rollBack();
+    // }
+    //     $request->validate([
+    //         'product_name'=>'required|max:20',
+    //         'company-id'=>'required|integer',
+    //         'price'=>'required|integer',
+    //         'stock'=>'required|integer',
+    //         'comment'=>'required|max:140',
+    //     ]);
 
        
-    }
+    // }
     
     public function update(ArticleRequest $request, $id)
     {   
@@ -154,7 +154,7 @@ class ProductController extends Controller
             $array['img_path']=$img_path;
            
         }
-        $updateProducts　= $model->updateProducts($array,$id);
+        $updateProducts = $model->updateProducts($array,$id);
         
         return redirect()->route('products.edit',$id)->with('successMessage', '登録に成功しました。');
     }
@@ -167,13 +167,23 @@ class ProductController extends Controller
     
     }
     
-   
+    public function search(Request $request)
+    {
+        // キーワードと検索対象のメーカーIDを取得
+        $keyword = $request->input('keyword');
+        $searchCompany = $request->input('company_id');
+       
+        // Product モデルのインスタンスを作成
+        $products = new Product();
+        $companies = new Company();
     
-
-
-
-
-
+        // インスタンスを介して検索メソッドを呼び出し
+        $products = (new Product())->search($keyword, $searchCompany, $request);
+        $companies = Company::all();
+    
+        return view('product.index', ['products' => $products , 'companies' => $companies ,'keyword' => $keyword, 'searchCompany' => $searchCompany])->render();
+    
+    }
 
     }
 

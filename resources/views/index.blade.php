@@ -12,19 +12,19 @@
         </div>
     </div>
     <div>
-    <form action="{{ route('products.index') }}" method="GET">
+    <form action="{{ route('products.search') }}" method="GET">
      @csrf    
     <dl class="search-box card-body mb-0">
                 <dt>商品名</dt>
                 <dd>
-                <input type="text" name="keyword" class="form-control" placeholder="商品名" value="{{ Request::get('keyword') }}">
+                <input type="text" name="keyword" class="form-control" placeholder="商品名" value="{{ $keyword ?? '' }}">
                 </dd>
                 <div class="left">
                     <div class="form-group">
-                     <select name="company-id" class="custom-sedlect form-control pl-4">   
+                     <select class="form-select" id="company_id" name="company_id" placeholder="会社名を検索">
                        <option>メーカーを選択してください</option>
                     @foreach ($companies as $company)
-                    <option value= "{{ $company->id }}" >   
+                    <option value= "{{ $company->id }}" {{ $company->company_name }}>   
                     {{ $company->company_name }}
                     </option>
                     @endforeach
