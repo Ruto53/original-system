@@ -14,6 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('sales', function (Blueprint $table) {
+            $table->id();
             $table->id('product_id')->unsigned();
             $table->timestamps();
         });
