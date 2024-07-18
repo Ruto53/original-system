@@ -20,7 +20,9 @@ Route::get('/',function(){
 });
 
 Auth::routes(); //
-Route::get('/products', 'App\Http\Controllers\ProductController@index')->name('products.index');
+
+Route::get('/home', ['App\Http\Controllers\HomeController::class', 'index'])->name('home');
+Route::get('/products/index', 'App\Http\Controllers\ProductController@index')->name('products.index');
 Route::get('/products/create','App\Http\Controllers\ProductController@create')->name('products.create');
 Route::get('/products/show/{id}','App\Http\Controllers\ProductController@show')->name('products.show');
 Route::post('/products/store','App\Http\Controllers\ProductController@store')->name('products.store');
@@ -31,6 +33,5 @@ Route::get('/products/regist','ProductController@showRegistForm')->name('regist'
 Route::post('/products/regist','ProductController@registSubmit')->name('submit');
 Route::get('products/search','ProductController@search')->name('products.search');
 
-Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+

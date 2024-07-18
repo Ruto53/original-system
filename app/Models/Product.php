@@ -2,8 +2,12 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\ProductRequest;
+use App\Http\Requests\Request;
+use Illuminate\Support\Facades\Storage;
 
 class Product extends Model
 {
@@ -17,6 +21,20 @@ class Product extends Model
         'updated_at',                                               
                                                        
      ];          
+
+     // Productモデルがsalesテーブルとリレーション関係を結ぶためのメソッド
+    public function sales()
+    {
+        return $this->hasMany(Sale::class);
+    }
+
+
+    // Productモデルがcompaniesテーブルとリレーション関係を結ぶ為のメソッドです
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
+    }
+
     public function getList() {
         $products = DB::table('products')
                        ->join('companies','products.company-id','=', 'companies.id')
@@ -24,6 +42,11 @@ class Product extends Model
         return $products;                            
 
     } 
+    
+    public function create() {
+        $companies = DB::table('companies')->create();
+        return view('product.create', ['companies' => $companies]);
+    }
 
     public function getCompaniesList($id) {
         $products = DB::table('products')       
@@ -106,7 +129,7 @@ class Product extends Model
 {
     // products テーブルと companies テーブルを join
     $query = DB::table('products')
-        ->join('companies', 'products.company_id', '=', 'companies.id')
+        ->join('companies', 'products.company-id', '=', 'companies.id')
         ->select('products.*', 'companies.company_name');
 
     if ($keyword) {
@@ -114,7 +137,7 @@ class Product extends Model
     }
 
     if ($searchCompany) {
-        $query->where('products.company_id', '=', $searchCompany);
+        $query->where('products.company-id', '=', $searchCompany);
     }
    
 }

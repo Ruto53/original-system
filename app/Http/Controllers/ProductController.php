@@ -1,12 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\product;
+
 use Illuminate\Http\Request;
+use App\Models\product;
 use App\Models\Company;
-use App\Models\Bunrui;
 use App\Http\Requests\ArticleRequest;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class ProductController extends Controller
 {
@@ -30,7 +31,18 @@ class ProductController extends Controller
     
     public function create()
     {
-        $companies = company::all();
+        DB::beginTransaction();
+        try {
+        // 登録処理呼び出し
+        //$companiesにindexでreturnしたものが代入される。
+        $companies_model = new Company();
+        $companies = $companies_model->index();
+
+        DB::commit();
+    } catch (\Exception $e) {
+        DB::rollback();
+        return back();
+    }
 
         return view ('create',['companies'=>$companies]);
        
@@ -38,6 +50,7 @@ class ProductController extends Controller
 
     public function store(ArticleRequest $request)//新規登録画面
     {   
+       DB::beginTransaction(); 
        try{
         $model = new Product();
         $image = $request->file('img_path');
@@ -80,6 +93,7 @@ class ProductController extends Controller
 
     public function destroy($id)
     {   
+     DB::beginTransaction();   
      try{
         $model = new Product;
         $model -> destroyProduct($id);
