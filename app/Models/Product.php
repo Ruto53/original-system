@@ -38,7 +38,8 @@ class Product extends Model
     public function getList() {
         $products = DB::table('products')
                        ->join('companies','products.company-id','=', 'companies.id')
-                       ->select('products.*','companies.company_name');
+                       ->select('products.*','companies.company_name')
+                       ->get();
         return $products;                            
 
     } 
@@ -65,6 +66,7 @@ class Product extends Model
                                     'price'       => $request->input('price'),
                                     'stock'       => $request->input('stock'),
                                     'comment'     => $request->input('comment'),
+                                    'company-id'   => $request->input('company-id'),
                                     'img_path'    => $img_path,
                                  ]);               
     }

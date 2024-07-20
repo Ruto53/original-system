@@ -51,11 +51,6 @@ class RouteServiceProvider extends ServiceProvider
         });
     }
 
-    protected function redirectTo($request)
-    {
-        if(!$request->expectsJson()){
-            return route('admin.showLogin');
-        }
-    }
+  
 }
 

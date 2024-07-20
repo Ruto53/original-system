@@ -68,6 +68,7 @@ class ProductController extends Controller
         return redirect()->route('products.create')->with('successMessage', '登録に成功しました。');
     } catch (Exception $e) {   
         DB::rollBack();
+        return back();
     }    
 
         $request->validate([
@@ -101,6 +102,7 @@ class ProductController extends Controller
         DB::commit();
     } catch (Exception $e) {   
         DB::rollBack();
+        return back();
         return redirect()->route('products.index');
     }
     }
